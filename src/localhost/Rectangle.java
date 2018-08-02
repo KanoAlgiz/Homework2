@@ -1,64 +1,64 @@
 package localhost;
 
-public class Rectangle {
-    private double x1, y1, x2, y2, minx, maxx, miny, maxy;
+class Rectangle {
+    private double x1, y1, x2, y2, minX, maxX, minY, maxY;
 
-    Rectangle(double setx1, double sety1, double setx2, double sety2){
-        x1 = setx1;
-        y1 = sety1;
-        x2 = setx2;
-        y2 = sety2;
-        if (y1 > y2){
-            maxy = y1;
-            miny = y2;
+    Rectangle(double setX1, double setY1, double setX2, double setY2) {
+        x1 = setX1;
+        y1 = setY1;
+        x2 = setX2;
+        y2 = setY2;
+        if (y1 > y2) {
+            maxY = y1;
+            minY = y2;
         } else {
-            maxy = y2;
-            miny = y1;
+            maxY = y2;
+            minY = y1;
         }
 
-        if (x1 > x2){
-            maxx = x1;
-            minx = x2;
+        if (x1 > x2) {
+            maxX = x1;
+            minX = x2;
         } else {
-            maxx = x2;
-            minx = x1;
+            maxX = x2;
+            minX = x1;
         }
     }
 
-    double getSize(){
-        return (maxx - minx) * (maxy - miny);
+    double getSize() {
+        return (maxX - minX) * (maxY - minY);
     }
 
-    double getMinx(){
-        return minx;
+    double getMinx() {
+        return minX;
     }
 
-    double getMiny(){
-        return miny;
+    double getMiny() {
+        return minY;
     }
 
-    double getMaxx(){
-        return maxx;
+    double getMaxx() {
+        return maxX;
     }
 
-    double getMaxy(){
-        return maxy;
+    double getMaxy() {
+        return maxY;
     }
 
-    Rectangle getOverlapArea(Rectangle other){
+    Rectangle getOverlapArea(Rectangle other) {
         double newx1, newy1, newx2, newy2;
 
-        newx1 = maxx > other.getMaxx() ? other.getMaxx() : maxx;
-        newx2 = minx < other.getMinx() ? other.getMinx() : minx;
-        newy1 = maxy > other.getMaxy() ? other.getMaxy() : maxy;
-        newy2 = miny < other.getMiny() ? other.getMiny() : miny;
+        newx1 = maxX > other.getMaxx() ? other.getMaxx() : maxX;
+        newx2 = minX < other.getMinx() ? other.getMinx() : minX;
+        newy1 = maxY > other.getMaxy() ? other.getMaxy() : maxY;
+        newy2 = minY < other.getMiny() ? other.getMiny() : minY;
 
         return new Rectangle(newx1, newy1, newx2, newy2);
     }
 
-    boolean overlaps(Rectangle other){
-        boolean xbetween = (other.maxx <= maxx && other.maxx >= minx) || (other.minx <= maxx && other.minx >= minx);
-        boolean ybetween = (other.maxy <= maxy && other.maxy >= miny) || (other.miny <= maxy && other.miny >= miny);
-        return xbetween && ybetween;
+    boolean overlaps(Rectangle other) {
+        boolean xOverlaps = (other.getMaxx() <= maxX && other.getMaxx() >= minX) || (other.getMinx() <= maxX && other.getMinx() >= minX) || (other.getMinx() >= minX && other.getMaxx() <= maxX) || (other.getMinx() <= minX && other.getMaxx() >= maxX);
+        boolean yOverlaps = (other.getMaxy() <= maxY && other.getMaxy() >= minY) || (other.getMiny() <= maxY && other.getMiny() >= minY) || (other.getMiny() >= minY && other.getMaxy() <= maxY) || (other.getMiny() <= minY && other.getMaxy() >= maxY);
+        return xOverlaps && yOverlaps;
     }
 }
