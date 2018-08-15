@@ -3,62 +3,59 @@ package localhost;
 class Rectangle {
     private double x1, y1, x2, y2, minX, maxX, minY, maxY;
 
-    Rectangle(double setX1, double setY1, double setX2, double setY2) {
-        x1 = setX1;
-        y1 = setY1;
-        x2 = setX2;
-        y2 = setY2;
-        if (y1 > y2) {
-            maxY = y1;
-            minY = y2;
-        } else {
-            maxY = y2;
-            minY = y1;
-        }
+    Rectangle(double x1, double y1, double x2, double y2) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
 
-        if (x1 > x2) {
-            maxX = x1;
-            minX = x2;
-        } else {
-            maxX = x2;
-            minX = x1;
-        }
+        this.minX = Math.min(x1, x2);
+        this.minY = Math.min(y1, y2);
+
+        this.maxX = Math.max(x1, x2);
+        this.maxY = Math.max(y1, y2);
+
     }
 
     double getSize() {
-        return (maxX - minX) * (maxY - minY);
+
+        return (this.maxX - this.minX) * (this.maxY - this.minY);
     }
 
-    double getMinx() {
-        return minX;
+    double getMinX() {
+
+        return this.minX;
     }
 
-    double getMiny() {
-        return minY;
+    double getMinY() {
+
+        return this.minY;
     }
 
-    double getMaxx() {
-        return maxX;
+    double getMaxX() {
+
+        return this.maxX;
     }
 
-    double getMaxy() {
-        return maxY;
+    double getMaxY() {
+
+        return this.maxY;
     }
 
     Rectangle getOverlapArea(Rectangle other) {
-        double newx1, newy1, newx2, newy2;
+        double newX1, newY1, newX2, newY2;
 
-        newx1 = maxX > other.getMaxx() ? other.getMaxx() : maxX;
-        newx2 = minX < other.getMinx() ? other.getMinx() : minX;
-        newy1 = maxY > other.getMaxy() ? other.getMaxy() : maxY;
-        newy2 = minY < other.getMiny() ? other.getMiny() : minY;
+        newX1 = Math.min(this.maxX, other.getMaxX());
+        newX2 = Math.max(this.minX, other.getMinX());
+        newY1 = Math.min(this.maxY, other.getMaxY());
+        newY2 = Math.max(this.minY, other.getMinY());
 
-        return new Rectangle(newx1, newy1, newx2, newy2);
+        return new Rectangle(newX1, newY1, newX2, newY2);
     }
 
     boolean overlaps(Rectangle other) {
-        boolean xOverlaps = (other.getMaxx() <= maxX && other.getMaxx() >= minX) || (other.getMinx() <= maxX && other.getMinx() >= minX) || (other.getMinx() >= minX && other.getMaxx() <= maxX) || (other.getMinx() <= minX && other.getMaxx() >= maxX);
-        boolean yOverlaps = (other.getMaxy() <= maxY && other.getMaxy() >= minY) || (other.getMiny() <= maxY && other.getMiny() >= minY) || (other.getMiny() >= minY && other.getMaxy() <= maxY) || (other.getMiny() <= minY && other.getMaxy() >= maxY);
+        boolean xOverlaps = (other.getMaxX() <= maxX && other.getMaxX() >= minX) || (other.getMinX() <= maxX && other.getMinX() >= minX) || (other.getMinX() >= minX && other.getMaxX() <= maxX) || (other.getMinX() <= minX && other.getMaxX() >= maxX);
+        boolean yOverlaps = (other.getMaxY() <= maxY && other.getMaxY() >= minY) || (other.getMinY() <= maxY && other.getMinY() >= minY) || (other.getMinY() >= minY && other.getMaxY() <= maxY) || (other.getMinY() <= minY && other.getMaxY() >= maxY);
         return xOverlaps && yOverlaps;
     }
 }
